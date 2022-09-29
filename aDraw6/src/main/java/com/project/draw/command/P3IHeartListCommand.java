@@ -1,0 +1,27 @@
+package com.project.draw.command;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.ui.Model;
+
+import com.project.draw.dao.MDao;
+import com.project.draw.dto.HeartDto;
+import com.project.draw.dto.IBoardDto;
+import com.project.draw.util.Constant;
+
+public class P3IHeartListCommand implements DrawCommand {
+
+	@Override
+	public void execute(HttpServletRequest request, Model model) {
+		
+		MDao dao = Constant.mdao;
+		
+		String iId = request.getParameter("iId");
+		ArrayList<IBoardDto> dtos = dao.p3IHeartList(iId);
+		model.addAttribute("p3IHeartList", dtos);
+		
+	}
+
+}

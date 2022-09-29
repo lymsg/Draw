@@ -1,0 +1,10 @@
+create table DRAWUSER(
+PID varchar2(20) UNIQUE,
+PPW varchar2(100) not null,
+PEMAIL varchar2(50),
+PNAME varchar2(20),
+PPHONE varchar2(30) UNIQUE,
+PDATE date default sysdate,
+AUTH varchar2(20) default 'ROLE_USER'
+);
+commit;

@@ -1,0 +1,76 @@
+CREATE TABLE RAFFLEUPLOAD (
+RUID NUMBER(6) NOT NULL ENABLE primary key, 
+RUDATE VARCHAR2(50), 
+RUNAME VARCHAR2(100), 
+RUNAMEENG VARCHAR2(100), 
+RUSTORY VARCHAR2(3000), 
+RUCODE VARCHAR2(50), 
+RURELEASEDATE VARCHAR2(50), 
+RUPRICE VARCHAR2(50), 
+RUIMAGE VARCHAR2(1000), 
+RUONOFFLINE VARCHAR2(50)
+);
+
+create table RAFFLECAROUSELIMAGE (
+RUID1 NUMBER(6) NOT NULL ENABLE primary key, 
+RUCODE VARCHAR2(50), 
+RUIMAGE1 VARCHAR2(1000)
+);
+
+create table RAFFLEINFOUPLOAD (
+ID NUMBER(6) primary key,  
+RUCODE VARCHAR2(50),
+LOGO VARCHAR2(100),
+STORE VARCHAR2(100),
+STOREURL VARCHAR2(1000),
+STARTDATE VARCHAR2(100),
+STARTTIME VARCHAR2(100),
+ENDDATE VARCHAR2(100),
+ENDTIME VARCHAR2(100)
+);
+
+create table RAFFLEREPLY (
+RID NUMBER(6) primary key,  
+RUSERID VARCHAR2(20),
+RCONTENT VARCHAR2(3000),
+RDATE DATE DEFAULT SYSDATE,
+RLIKE NUMBER(6),
+RGROUP NUMBER(6),
+RSTEP NUMBER(6),
+RINDENT NUMBER(6),
+RCODE VARCHAR2(30)
+);
+
+create table MYRAFFLECALENDAR (
+CNO NUMBER(6) primary key,
+CID VARCHAR2(200),
+CTITLE VARCHAR2(200),
+CSTART VARCHAR2(200),
+CEND VARCHAR2(200),
+TSTART DATE,
+TEND DATE,
+CALLDAY VARCHAR2(200)
+);
+
+create sequence RAFFLEUPLOAD_seq nocache;
+create sequence RAFFLECAROUSELIMAGE_seq nocache;
+create sequence RAFFLEINFOUPLOAD_seq nocache;
+create sequence RAFFLEREPLY_seq nocache;
+create sequence MYRAFFLECALENDAR_seq nocache;
+
+commit;
+
+
+=======================================
+참고 사이트
+https://www.luck-d.com/release/product/1799/
+
+https://www.luck-d.com/release-raffle/detail/fragment-x-travis-scott-x-air-jordan-1-low/
+
+https://www.luck-d.com/release/product/1471/
+
+https://www.luck-d.com/release/product/1137/
+
+https://www.luck-d.com/release/product/2089/
+
+

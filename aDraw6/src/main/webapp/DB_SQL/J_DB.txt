@@ -1,0 +1,191 @@
+-------------------------------------------------
+
+
+
+(1회원가입DB, 2이미지게시물창, 3마이페이지, 4답글, 5좋아요, 6통계 테이블생성)
+(DRAWUSER, IBOARD, MYIBOARD, cmBoard, heartBoard, servey1Board)
+
+
+
+
+!) 만약 IBOARD시컨스테이블이 있다면 삭제 후 적용해야 좋아요가 정상작동합니다.
+!) 중복해서 insert하지 않게해주세요
+
+
+
+
+create table DRAWUSER(
+PID varchar2(20) UNIQUE,
+PPW varchar2(100) not null,
+PEMAIL varchar2(50),
+PNAME varchar2(20),
+PPHONE varchar2(30) UNIQUE,
+PDATE date default sysdate,
+AUTH varchar2(20) default 'ROLE_USER'
+);
+commit;
+
+
+create table IBoard(
+IBOARDNUM number(30) primary key,
+IID varchar2(100),
+ITEXT varchar2(150),
+IIMAGEPATH varchar2(100),
+IMODELNAME varchar2(100),
+IHEART number(30) default 0,
+IDATE date default sysdate,
+IHIT number(30) default 0
+);
+create sequence IBoard_seq nocache;
+
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'ididid', '하하하하', 'CZ0790-801_1.png', '조던 1 로우 OG 스타피쉬</br>CZ0790-801', 0, 0);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'tlsqkf11', '첫게시글 올려봅니다..ㅎ', 'CZ6501-100_1.png', '나이키 x 카시나 덩크 로우 80s 버스</br>CZ6501-100', 0, 0);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'tbwm123', '최근에 산 신발자랑ㅎㅎ', 'DD1877-001_4.png', '나이키 x 사카이 블레이저 로우 클래식 그린</br>DD1877-001', 300, 300);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'tlsqkf11', '잠깐 친구보러 나갔다가', 'CZ0790-801_2.png', '조던 1 로우 OG 스타피쉬</br>CZ0790-801', 1500, 1500);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'ididid', '비오는날 가벼운 조깅', 'DN1615-600_1.png', '나이키 x 슈프림 샥스 라이드 2 SP 레드</br>DN1615-600', 0, 0);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'tlsqkf11', '담벼락에 꽃이 이쁘게 피었어용!ㅎ', '555088-105_2.png', '조던 1 레트로 하이 OG 블랙 모카</br>555088-105', 7, 7);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'tbwm123', '앉아서 찍음', 'DN1615-200_1.png', '나이키 x 슈프림 샥스 라이드 2 SP 뉴트럴 올리브</br>DN1615-200', 0, 0);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'ididid', '바다 놀러왔어요ㅎ', 'DD1877-001_1.png', '나이키 x 사카이 블레이저 로우 클래식 그린</br>DD1877-001', 0, 0);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'ididid', '오늘은 등산갔다왔어용', 'DD1877-001_2.png', '나이키 x 사카이 블레이저 로우 클래식 그린</br>DD1877-001', 0, 0);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'ididid', '집앞 공원 잠깐 나왔다가', '555088-105_1.png', '조던 1 레트로 하이 OG 블랙 모카</br>555088-105', 1531, 1531);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'tbwm123', '엘리베이터 안에서', 'DD1877-001_3.png', '나이키 x 사카이 블레이저 로우 클래식 그린</br>DD1877-001', 0, 0);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'travelS2', '신발자랑ㅎㅎ', 'DD9315-100_1.png', '조던 1 로우 골프 화이트 앤 유니버시티 블루</br>DD9315-100', 2, 2);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'ididid', '산뜻하게 사진 한장', 'CZ0790-801_3.png', '조던 1 로우 OG 스타피쉬</br>CZ0790-801', 0, 0);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'ididid', '아 덥다더워~~', '1019271-BBLC_1.png', '호카 오네 오네 본디 6 블랙 - 와이드</br>1019271-BBLC', 0, 0);
+insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME, IHEART, IHIT)
+values(iboard_seq.nextval, 'tbwm123', '친구들이랑 신발 맞춤ㅎ', 'CZ6501-100_2.png', '나이키 x 카시나 덩크 로우 80s 버스</br>CZ6501-100', 0, 0);
+commit;
+
+
+create table MYIBOARD(
+IID varchar2(100) primary key,
+IINTRODUCE varchar2(200) default '안녕하세요.',
+IPROFILEPATH varchar2(100) default 'avatar3.png',
+ITOTALHEART number(30) default 0
+);
+
+insert into myiboard values ('ididid', '신발과 고양이를 좋아해요', 'mio.png', 1531);
+insert into myiboard values ('tbwm123', '안녕하세요!', 'bird.jpg', 307);
+insert into myiboard values ('tlsqkf11', '새로만들었어요. 좋아요 부탁드려요^^', 'Penguins.png', 152);
+insert into myiboard values ('travelS2', '여행 가고싶다..', 'puppy.png', 2);
+commit;
+
+
+create table cmBoard(
+cmIBNum number(10) not null,
+cmNum number(10) primary key,
+cmId varchar2(50) not null,
+cmText varchar2(500) not null,
+cmDate date default sysdate
+);
+create sequence cmBoard_seq nocache;
+commit;
+
+
+create table heartBoard (
+hNum number(10) primary key,
+hiBoardNum number(10) not null,
+hiId varchar2(100) not null,
+hiImagepath varchar2(100) not null,
+hId varchar2(20) not null,
+hDate date default sysdate
+);
+create sequence heartBoard_seq nocache;
+
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 6, 'tlsqkf11', '555088-105_2.png','ididid');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 13, 'ididid', 'CZ0790-801_3.png','ididid');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 14, 'ididid', '1019271-BBLC_1.png','ididid');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 4, 'tlsqkf11', 'CZ0790-801_2.png','ididid');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 3, 'tbwm123', 'DD1877-001_4.png','ididid');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 2, 'tlsqkf11', 'CZ6501-100_1.png','ididid');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 7, 'tbwm123', 'DN1615-200_1.png','ididid');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 6, 'tlsqkf11', '555088-105_2.png','tlsqkf11');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 13, 'ididid', 'CZ0790-801_3.png','tlsqkf11');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 14, 'ididid', '1019271-BBLC_1.png','tlsqkf11');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 4, 'tlsqkf11', 'CZ0790-801_2.png','tlsqkf11');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 6, 'tlsqkf11', '555088-105_2.png','tbwm123');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 13, 'ididid', 'CZ0790-801_3.png','tbwm123');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 14, 'ididid', '1019271-BBLC_1.png','tbwm123');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 4, 'tlsqkf11', 'CZ0790-801_2.png','tbwm123');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 3, 'tbwm123', 'DD1877-001_4.png','tbwm123');
+insert into heartBoard (hNum,hiBoardNum,hiId,hiImagepath,hId) values(HeartBoard_seq.nextval, 2, 'tlsqkf11', 'CZ6501-100_1.png','tbwm123');
+commit;
+
+
+create table servey1Board (
+season varchar2(20),
+userAge varchar2(50),
+userM number(4),
+userW number(4),
+uDate date default sysdate
+);
+insert into servey1Board (season, userAge, userM, userW) values ('22년3분기', '10대', 8, 7);
+insert into servey1Board (season, userAge, userM, userW) values ('22년3분기', '20대', 20, 20);
+insert into servey1Board (season, userAge, userM, userW) values ('22년3분기', '30대', 14, 11);
+insert into servey1Board (season, userAge, userM, userW) values ('22년3분기', '40대', 6, 9);
+
+create table servey2Board (
+season varchar2(20),
+brandName varchar2(20),
+bPercent number(4),
+uDate date default sysdate
+);
+insert into servey2Board (season,brandName, bPercent) values ('22년3분기','나이키', 40);
+insert into servey2Board (season,brandName, bPercent) values ('22년3분기','뉴발란스', 20);
+insert into servey2Board (season,brandName, bPercent) values ('22년3분기','아디다스', 15);
+insert into servey2Board (season,brandName, bPercent) values ('22년3분기','컨버스', 18);
+insert into servey2Board (season,brandName, bPercent) values ('22년3분기','반스', 7);
+commit;
+
+
+
+
+
+
+===================================================
+이 아래는 오라클에 안넣어도 됩니다.
+
+
+//대댓글은 시간남으면 만들듯
+create table ccmBoard(
+cmNum number(10) not null,
+ccmNum number(10) primay key,
+ccmId varchar2(50) not null,
+ccmText vatchar2(500) not null,
+ccmDate date default sysdate
+);
+create sequence ccmBoard_seq nocache;
+
+테이블(모델명)
+create table ModelT(
+mCode varchar2(50) primary key,
+mEName varchar2(150),
+mKName varchar2(150),
+price number(10)
+);
+
+insert into modelT values ('DN1615-200', 'Nike x Supreme Shox Ride 2 SP Neutral Olive', '나이키 x 슈프림 샥스 라이드 2 SP 뉴트럴 올리브', 530000);
+insert into modelT values ('DN1615-600', 'Nike x Supreme Shox Ride 2 SP Red', '나이키 x 슈프림 샥스 라이드 2 SP 레드', 530000);
+insert into modelT values ('DD1877-001', 'Nike x Supreme Shox Ride 2 SP Neutral Olive','나이키 x 슈프림 샥스 라이드 2 SP 뉴트럴 올리브', 619000);
+insert into modelT values ('CZ6501-100', 'Nike x Kasina Dunk Low 80s Bus', '나이키 x 카시나 덩크 로우 80s 버스', 1449000);
+insert into modelT values ('CZ0790-801', 'Jordan 1Low OG Starfish', '조던 1로우 OG 스타피쉬', 393000);
+insert into modelT values ('1019271-BBLC', 'Hoka One One Bondi 6 Black - Wide, '호카 오네 오네 본디 6 블랙-와이드', 280000);
+insert into modelT values (555088-105, 'Jordan 1 Retro High OG Black Mocha', '조던 1 레트로 하이 OG 블랙 모카', 886000);
+commit;
+
+
+

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.draw.dao.IDao">
+	<insert id="join" parameterType="com.project.draw.dto.DrawJoinDto">
+        INSERT ALL
+		INTO DRAWUSER (PID,PPW,PEMAIL,PNAME,PPHONE)
+		values (#{pid},#{ppw},#{pemail},#{pname},#{pphone})
+		INTO myiboard (iId)
+		values (#{pid})
+		select #{pid},#{ppw},#{pemail},#{pname},#{pphone},#{pid}
+		FROM DUAL
+	</insert>
+	
+	<select id="login" parameterType="String" resultType="com.project.draw.dto.DrawJoinDto">
+		SELECT * FROM DRAWUSER WHERE PID = #{pid}
+	</select>
+	
+	
+<!--   정지은SNS   -->
+	<select id="p1item" resultType="com.project.draw.dto.IBoardDto">
+		select * from iboard where iModelName = #{iModelName}
+	</select>
+	<select id="p1rUserView" resultType="com.project.draw.dto.MyIBoardDto">
+		<![CDATA[
+			select * from myIBoard WHERE ROWNUM <= 5 order by iTotalHeart desc
+		]]>
+	</select>
+	<select id="p1sUserView" resultType="com.project.draw.dto.MyIBoardDto">
+		select * from myIBoard
+	</select>
+	<select id="iView1" resultType="com.project.draw.dto.IBoardDto">
+		select * from iboard order by iboardnum desc
+	</select>
+	<select id="hotIBoard" resultType="com.project.draw.dto.IBoardDto">
+		select * from iboard order by iHeart desc, iHit desc
+	</select>
+	
+	<select id="p2View" resultType="com.project.draw.dto.IBoardDto">
+		select * from Iboard where iBoardNum = #{iBoardNum}
+	</select>
+	<select id="p2PView" resultType="com.project.draw.dto.MyIBoardDto">
+		select * from MyIBoard where iId = #{iId}
+	</select>
+	<update id="p2UpHit" parameterType="com.project.draw.dto.IBoardDto">
+		update iBoard set iHit = iHit + 1 where iBoardNum = #{iBoardNum}
+	</update>
+	
+	<insert id="p2mentWrite" parameterType="com.project.draw.dto.CmBoardDto">
+		insert into cmBoard (cmIBNum, cmNum, cmId, cmText) values (#{cmIBNum}, cmBoard_seq.nextval, #{cmId}, #{cmText})  
+	</insert>
+	<select id="p2cmView" parameterType="int" resultType="com.project.draw.dto.CmBoardDto">
+		select * from cmBoard where cmIBNum = #{cmIBNum} order by cmNum
+	</select>
+	<delete id="p2cmDelete" parameterType="com.project.draw.dto.CmBoardDto">
+		delete from cmBoard where cmNum = #{cmNum}
+	</delete>
+	
+	<select id="p2hCheck" resultType="com.project.draw.dto.HeartDto">
+		select * from heartBoard where hiBoardNum = #{hiBoardNum} and hId = #{hId}
+	</select>
+	<insert id="p2hUp" parameterType="com.project.draw.dto.HeartDto">
+		insert into HeartBoard (hnum, hiboardnum, hiId, hiImagePath, hid) values (heartBoard_seq.nextval, #{hiBoardNum}, #{hiId}, #{hiImagePath}, #{hId})
+	</insert>
+	<delete id="p2hDown" parameterType="com.project.draw.dto.HeartDto">
+		delete from HeartBoard where hNum = #{hNum}
+	</delete>
+	<update id="p2UpHeart" parameterType="com.project.draw.dto.IBoardDto">
+		update iBoard set iHeart = iHeart +1 where iBoardNum = #{hiBoardNum}
+	</update>
+	<update id="p2DownHeart" parameterType="com.project.draw.dto.IBoardDto">
+		update iBoard set iHeart = iHeart -1 where iBoardNum = #{hiBoardNum}
+	</update>
+	
+	<select id="p3IHeartList" resultType="com.project.draw.dto.HeartDto">
+		<![CDATA[
+		select * from HeartBoard where hId = #{iId} and ROWNUM <= 30 order by hNum desc
+		]]>
+	</select>
+	<update id="p3TotalHUp" parameterType="com.project.draw.dto.MyIBoardDto">
+		update myiboard set iTotalHeart = iTotalHeart +1 where iId = #{iId}
+	</update>
+	<update id="p3TotalHDown" parameterType="com.project.draw.dto.MyIBoardDto">
+		update myiboard set iTotalHeart = iTotalHeart -1 where iId = #{iId}
+	</update>
+
+	<select id="p3View" resultType="com.project.draw.dto.MyIBoardDto">
+		select * from myiboard where iid = #{iId}
+	</select>
+	<select id="p3IList" resultType="com.project.draw.dto.IBoardDto">
+		select * from iboard where iid = #{iId} order by iboardnum desc
+	</select>
+	<update id="p3myPModi" parameterType="com.project.draw.dto.MyIBoardDto">
+		update myIboard set iProfilePath = #{iProfilePath} where iId = #{iId}
+	</update>
+	<update id="p3myModi" parameterType="com.project.draw.dto.MyIBoardDto">
+		update myIboard set iTotalHeart = #{iTotalHeart}, iIntroduce = #{iIntroduce} where iId = #{iId}
+	</update>
+
+	<insert id="p4WriteI" parameterType="com.project.draw.dto.IBoardDto">
+		insert into iboard (IBOARDNUM, IID, ITEXT, IIMAGEPATH, IMODELNAME)
+		values(iboard_seq.nextval, #{iId}, #{iText}, #{iImagePath}, #{iModelName})
+	</insert>
+	<select id="p4modifyView" parameterType="int" resultType="com.project.draw.dto.IBoardDto">
+		select * from Iboard where iBoardNum = #{iBoardNum}
+	</select>
+	<update id="p4modify" parameterType="com.project.draw.dto.IBoardDto">
+		update iboard set iid = #{iId}, itext = #{iText}, iModelName = #{iModelName}
+		where iboardnum = #{iBoardNum}
+	</update>
+	<delete id="p4modifyDelete" parameterType="int">
+		delete from iboard where iBoardNum = #{iBoardNum}
+	</delete>
+
+	<select id="p5View1" resultType="com.project.draw.dto.Servey1Dto">
+		SELECT * FROM servey1Board where season = '22년3분기' order by userAge asc
+	</select>
+	<select id="p5View2" resultType="com.project.draw.dto.Servey2Dto">
+		SELECT * FROM servey2Board where season = '22년3분기' order by bPercent desc
+	</select>
+<!--
+	<insert id="p5Write" parameterType="com.project.draw.dto.Servey1Dto">
+		insert into servey1Board (userAge, userM, userW) values (#{userAge},#{userM},#{userW})
+	</insert>
+ -->	
+
+
+
+
+<!--    이영민 SHOP    -->
+	<insert parameterType="com.project.draw.dto.ContentDto" id="sell">
+		INSERT INTO PRODUCT(BRAND,NAME,IMAGE,PRICE,LIMIT,PNO)VALUES(#{brand},#{name},#{image},#{price},#{limit},PRODUCT_SEQ.nextval)
+	</insert>
+	<select parameterType="int" id="listDao" resultType="com.project.draw.dto.ContentDto">
+		SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+		FROM(SELECT * FROM PRODUCT ORDER BY PNO DESC)A) 
+		<![CDATA[
+			WHERE RNUM < 5
+		]]>
+	</select>
+	<select id="nikeList" resultType="com.project.draw.dto.ContentDto">
+		SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+		FROM(SELECT * FROM PRODUCT WHERE BRAND = 'Nike' ORDER BY PNO DESC)A) 
+		<![CDATA[
+			WHERE RNUM < 5
+		]]>
+	</select>
+	<select id="adidasList" resultType="com.project.draw.dto.ContentDto">
+		SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+		FROM(SELECT * FROM PRODUCT WHERE BRAND = 'Adidas' ORDER BY PNO DESC)A) 
+		<![CDATA[
+			WHERE RNUM < 5
+		]]>
+	</select>
+	<select id="newbalList" resultType="com.project.draw.dto.ContentDto">
+		SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+		FROM(SELECT * FROM PRODUCT WHERE BRAND = 'NewBalance' ORDER BY PNO DESC)A) 
+		<![CDATA[
+			WHERE RNUM < 5
+		]]>
+		</select>
+	<select id="unarmList" resultType="com.project.draw.dto.ContentDto">
+		SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+		FROM(SELECT * FROM PRODUCT WHERE BRAND = 'UnderArmour' ORDER BY PNO DESC)A) 
+		<![CDATA[
+			WHERE RNUM < 5
+		]]>
+	</select>
+	<select id="newsort" resultType="com.project.draw.dto.ContentDto">
+		SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+		FROM(SELECT * FROM PRODUCT ORDER BY PNO DESC)A)
+		<![CDATA[
+			WHERE RNUM < 5
+		]]>
+	</select>
+	<select id="oldsort" resultType="com.project.draw.dto.ContentDto">
+		SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+		FROM(SELECT * FROM PRODUCT ORDER BY PNO ASC)A)
+		<![CDATA[
+			WHERE RNUM < 5
+		]]>
+	</select>
+	<select id="lpricesort" resultType="com.project.draw.dto.ContentDto">
+		SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+		FROM(SELECT * FROM PRODUCT ORDER BY PRICE ASC)A)
+		<![CDATA[
+			WHERE RNUM < 5
+		]]>
+	</select>
+	<select id="hpricesort" resultType="com.project.draw.dto.ContentDto">
+		SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+		FROM(SELECT * FROM PRODUCT ORDER BY PRICE DESC)A)
+		<![CDATA[
+			WHERE RNUM < 5
+		]]>
+	</select>
+	<update parameterType="com.project.draw.dto.ContentDto" id="modify">
+		UPDATE PRODUCT SET PRICE = #{price}, PBUYER = #{pbuyer} where NAME = #{name}
+	</update>
+	<select parameterType="int" id="apageList" resultType="com.project.draw.dto.ContentDto">
+	<![CDATA[
+			SELECT * FROM(SELECT A.*,ROWNUM AS RNUM
+			FROM(SELECT * FROM PRODUCT ORDER BY PNO DESC)A)
+			WHERE RNUM >= #{startNo} AND RNUM <= #{startNo} + 3
+		]]>
+	</select>
+
+
+
+<!--   함세윤 RAFFLE    -->
+	<insert id="raffleUpload" parameterType="com.project.draw.dto.RaffleUploadDto">
+		INSERT INTO RAFFLEUPLOAD (ruId, ruDate, ruName, ruNameEng, ruStory, ruCode, ruReleaseDate, ruPrice, ruImage, ruOnoffline)		
+		VALUES (RAFFLEUPLOAD_SEQ.nextval, #{ruDate}, #{ruName}, #{ruNameEng}, #{ruStory}, #{ruCode}, #{ruReleaseDate}, #{ruPrice}, #{ruImage}, #{ruOnoffline})
+	</insert>
+	
+	<select id="raffleList" resultType="com.project.draw.dto.RaffleUploadDto">
+		SELECT * FROM RAFFLEUPLOAD ORDER BY RUDATE ASC
+	</select>
+	
+	<delete id="raffleListDelete" parameterType="int">
+		DELETE FROM RAFFLEUPLOAD WHERE ruId = #{ruId}
+	</delete>
+	
+	<insert id="addtoCalendar" parameterType="com.project.draw.dto.MyRaffleCalendarDto">
+		INSERT INTO MYRAFFLECALENDAR 
+		VALUES(MYRAFFLECALENDAR_SEQ.nextval, #{cId}, #{cTitle},	#{cStart}, #{cEnd}, #{sStart}, #{sEnd}, #{cAllDay}) 
+	</insert>
+	
+	<select id="raffleDetails" parameterType="String" resultType="com.project.draw.dto.RaffleUploadDto">
+		SELECT * FROM RAFFLEUPLOAD WHERE RUCODE = #{ruCode}
+	</select>
+	
+	<insert id="raffleCarouselUpload" parameterType="com.project.draw.dto.RaffleCarouselImageDto">
+		INSERT INTO RaffleCarouselImage (ruId1, ruCode, ruImage1)
+		VALUES (RaffleCarouselImage_seq.nextval, #{ruCode}, #{ruImage1})
+	</insert>
+	
+	<select id="raffleCarouselDetails" parameterType="String" resultType="com.project.draw.dto.RaffleCarouselImageDto">
+		SELECT * FROM RaffleCarouselImage WHERE RUCODE = #{ruCode} 
+	</select>
+	
+	<insert id="raffleInfoUpload" parameterType="com.project.draw.dto.RaffleInfoUploadDto">
+		INSERT INTO RaffleInfoUpload (id, ruCode, logo, store, storeUrl, startDate, startTime, endDate, endTime)
+		VALUES (RaffleInfoUpload_SEQ.nextval, #{ruCode}, #{logo}, #{store}, #{storeUrl}, #{startDate}, #{startTime}, #{endDate}, #{endTime}) 
+	</insert>
+	
+	<select id="raffleInfoList" parameterType="String" resultType="com.project.draw.dto.RaffleInfoUploadDto">
+		SELECT * FROM RaffleInfoUpload WHERE RUCODE = #{ruCode}
+	</select>
+	
+	<delete id="raffleInfoDelete">
+		DELETE FROM RaffleInfoUpload WHERE id = #{id}
+	</delete>
+	
+	<insert id="RaffleReplyWrite" parameterType="com.project.draw.dto.RaffleReplyDto">
+		INSERT INTO RaffleReply(rId, rUserId, rContent, rLike, rGroup, rStep, rIndent, rCode)
+		VALUES (RaffleReply_seq.nextval, #{rUserId}, #{rContent}, 0, RaffleReply_seq.currval, 0, 0, #{rCode})
+	</insert>
+	
+	<select id="RaffleReplyList" parameterType="String" resultType="com.project.draw.dto.RaffleReplyDto">		
+			SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+			FROM(SELECT * FROM RAFFLEREPLY WHERE rCode = #{rCode} ORDER BY RGROUP DESC,RSTEP ASC)A)			
+		<![CDATA[
+			WHERE RNUM < 11
+		]]>
+	</select>
+	
+	<select id="pagelist" parameterType="com.project.draw.dto.RaffleReplyPageListDto" resultType="com.project.draw.dto.RaffleReplyDto">
+		<![CDATA[
+			SELECT * FROM(SELECT A.*,ROWNUM AS RNUM
+			FROM(SELECT * FROM RAFFLEREPLY WHERE RCODE=#{rCode} ORDER BY RGROUP DESC,RSTEP ASC)A)
+			WHERE RNUM >= #{startNo} AND RNUM <= #{startNo} + 9
+		]]>
+	</select>
+	
+	<delete id="raffleReplyDelete" parameterType="int">
+		DELETE FROM RAFFLEREPLY WHERE RID = #{rid}
+	</delete>
+	
+	<select id="myRaffleCalendarList" parameterType="String" resultType="com.project.draw.dto.MyRaffleCalendarDto">
+		SELECT * FROM MYRAFFLECALENDAR WHERE CID = #{cId} ORDER BY CNO ASC
+	</select>
+	
+	<update id="myRaffleCalendarUpdate" parameterType="com.project.draw.dto.MyRaffleCalendarDto">
+		UPDATE MYRAFFLECALENDAR CSTART=#{cStart},CEND=#{cEnd},CTITLE=#{cTitle} WHERE CNO=#{cNo}
+	</update>
+	
+	<insert id="myRaffleCalendarInsert" parameterType="com.project.draw.dto.MyRaffleCalendarDto">
+		INSERT INTO MYRAFFLECALENDAR 
+		VALUES(MYRAFFLECALENDAR_SEQ.nextval, #{cId}, #{cTitle},	#{cStart}, #{cEnd}, #{tStart}, #{tEnd}, #{cAllDay}) 
+	</insert>
+	
+	<delete id="myRaffleCalendarDelete" parameterType="com.project.draw.dto.MyRaffleCalendarDto">
+		DELETE FROM MYRAFFLECALENDAR WHERE CNO = #{cNo}
+	</delete>
+	
+	
+<!--   최정민 BOARD    -->	
+	
+	<select id="blist" resultType="com.project.draw.dto.BoardDto">
+		<!-- mybatis태그나 키워드 등에 사용되는 문자를 일반 문자로 사용시에는 <![CDATA[ ]] 안에다 sql문을 만듬 -->
+		<!--ROWNUM은 오라클의 행번호를 표시하는 가상 컬럼명 -->
+		<![CDATA[
+			SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+			FROM(SELECT * FROM BOARD ORDER BY BGROUP DESC,BSTEP ASC)A)
+			WHERE RNUM < 11
+		]]>
+	</select>
+
+	<select parameterType="int" id="bpageList" resultType="com.project.draw.dto.BoardDto">
+		<![CDATA[
+			SELECT * FROM(SELECT A.*,ROWNUM AS RNUM
+			FROM(SELECT * FROM BOARD ORDER BY BGROUP DESC,BSTEP ASC)A)
+			WHERE RNUM >= #{startNo} AND RNUM <= #{startNo} + 9
+		]]>
+	</select>
+
+	<insert parameterType="com.project.draw.dto.BoardDto" id="bWrite">
+		INSERT INTO BOARD(BID,BNAME,BTITLE,BCONTENT,BHIT,BGROUP,BSTEP,BINDENT)VALUES(BOARD_SEQ.nextval,#{bName},#{bTitle},#{bContent},0,BOARD_SEQ.currval,0,0) 
+	</insert>
+
+	<select parameterType="int" id="bcontentView" resultType="com.project.draw.dto.BoardDto">
+		SELECT * FROM BOARD WHERE BID = #{bId} 
+	</select>
+	
+	<update parameterType="int" id="bupHit">
+		UPDATE BOARD SET BHIT = BHIT + 1 WHERE BID = #{bId} 
+	</update>
+	
+	<update parameterType="com.project.draw.dto.BoardDto" id="bmodify">
+		UPDATE BOARD SET BTITLE = #{bTitle},BCONTENT = #{bContent} WHERE BID = #{bId} 
+	</update>
+	
+	<delete parameterType="int" id="bdelete">
+		DELETE FROM BOARD WHERE BID = #{bId} 
+	</delete>
+	
+	<select parameterType="int" id="breplyView" resultType="com.project.draw.dto.BoardDto">
+		SELECT * FROM BOARD WHERE BID = #{bId} 
+	</select>
+	
+	<insert parameterType="com.project.draw.dto.BoardDto" id="breply">
+		INSERT INTO BOARD(BID,BNAME,BTITLE,BCONTENT,BGROUP,BSTEP,BINDENT)VALUES(BOARD_SEQ.nextval,#{bName},#{bTitle},#{bContent},#{bGroup},#{bStep}+1,#{bIndent}+1) 
+	</insert>	
+	
+	<update parameterType="com.project.draw.dto.BoardDto" id="breplyShape">
+		<![CDATA[
+			UPDATE BOARD SET BSTEP=${bStep}+1 WHERE BGROUP=#{bGroup} AND BSTEP > #{bStep}
+		]]>
+	</update>
+	
+</mapper>
+
