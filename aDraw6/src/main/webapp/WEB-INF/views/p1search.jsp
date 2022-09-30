@@ -82,17 +82,17 @@ a, a hover, h5 {
 		<div class="row" id="search2">
 			<c:forEach items="${iView1}" var="dtos">
 					<a href="p2?iBoardNum=${dtos.iBoardNum}&iId=${dtos.iId}&hId=${user_id}" id="searchImg">
-						<label for="searchImg1" style="display:none; hight:0;">${dtos.iModelName}.split[1]</label>
+						<label for="searchImg1" style="display:none; hight:0;">${dtos.iModelName}</label>
 						<img class="rounded" id="searchImg1" src="images/boardImage/${dtos.iImagePath}" alt="이클립스를refresh해주세요">
 <!-- 						<input type="text" value="${dtos.iModelName}" style="visibility:hidden;"> -->
 					</a>
 			</c:forEach>
 		</div>
-		
+		    
 	</div>
 
 
-
+<!-- 테스트 수정 -->
 
 </body>
 </html>
