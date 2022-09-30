@@ -62,7 +62,7 @@
 .header-body img {
 	height:100px;
 	width:auto;	
-}
+} 
 .header-bottom {
 	text-align:center;
 	border-bottom:2px solid black;
